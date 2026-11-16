@@ -242,11 +242,11 @@ footer small{display:block;margin-top:40px;opacity:.6}
 /* ===== CONFIGURACIÓN (rellenar antes de publicar) ===== */
 const CONFIG={
   email:"patasecas.tienda@gmail.com",
-  titular:"[NOMBRE Y APELLIDOS DEL TITULAR]", nif:"[NIF]", direccion:"[DIRECCIÓN POSTAL]",
-  paypalClientId:"", // al rellenarlo se activa el pago con PayPal
-  envio:"[PENDIENTE: plazo del proveedor, p. ej. 7–15 días laborables]",
+  titular:"Iker Aguilar", nif:"54755459A", direccion:"Carrer de Tossa, 14, 08227 Terrassa (Barcelona)",
+  paypalClientId:"BAArKhsmUkF3zCzY7cq8yOy4DrxbUMT0y5SzC7Y3vnoxiSpJPvgW4m1ve_DvNsfaD2jgWeZP266FRAd_-A", // al rellenarlo se activa el pago con PayPal
+  envio:"entre 2 y 4 semanas",
   envioGratis:true,
-  abierta:false, // true cuando haya proveedor, PayPal y datos del titular
+  abierta:true, // true cuando haya proveedor, PayPal y datos del titular
   actualizado:"16/11/2026"
 };
 /* ===== CATÁLOGO (precios provisionales hasta confirmar coste con proveedor) ===== */
@@ -262,7 +262,7 @@ const ART={
 const P=[
  {id:"abrigo",cat:"Abrigos",tag:"Más vendido",bg:"#FFF3CC",name:"Abrigo impermeable con arnés",price:34.90,
   short:"Chubasquero con arnés integrado y detalles reflectantes.",
-  opts:{Talla:["XS","S","M","L","XL","XXL"],Color:["Amarillo","Azul marino"]},
+  opts:{Talla:["S","M","L","XL","2XL","3XL"],Color:["Gris","Amarillo"]},
   pts:["Tejido impermeable","Arnés integrado: engancha la correa por la abertura de la espalda","Detalles reflectantes","[PENDIENTE: material y especificaciones exactas del proveedor]"]},
  {id:"saco",cat:"Descanso",tag:"Invierno",bg:"#E3F0EC",name:"Saco-cama calentito",price:29.90,
   short:"Cama tipo saco para perros pequeños que buscan esconderse del frío.",
@@ -280,18 +280,18 @@ const P=[
   short:"Dispensador para la correa con rollos de bolsas.",
   opts:{Pack:["Dispensador + 4 rollos","8 rollos de recambio"]},pts:["Se engancha a la correa","[PENDIENTE: material de las bolsas; solo diremos «biodegradable» si el proveedor lo certifica]"]}
 ];
-const SIZES=[["Talla","Pecho (cm)","Espalda (cm)","Orientativo"],["XS","[pendiente]","[pendiente]","Chihuahua"],["S","[pendiente]","[pendiente]","Yorkshire"],["M","[pendiente]","[pendiente]","Beagle"],["L","[pendiente]","[pendiente]","Border collie"],["XL","[pendiente]","[pendiente]","Labrador"],["XXL","[pendiente]","[pendiente]","Pastor alemán"]];
+const SIZES=[["Talla","Pecho (cm)","Espalda (cm)","Orientativo"],["S","[pendiente]","[pendiente]","Perro muy pequeño"],["M","[pendiente]","[pendiente]","Perro pequeño"],["L","[pendiente]","[pendiente]","Perro pequeño-mediano"],["XL","[pendiente]","[pendiente]","Perro mediano"],["2XL","[pendiente]","[pendiente]","Perro mediano"],["3XL","[pendiente]","[pendiente]","Perro mediano-grande"]];
 const FAQ=[
  ["¿Cuánto tarda el envío?",()=>`El plazo estimado es ${CONFIG.envio}. ${CONFIG.envioGratis?"El envío está incluido en el precio.":""} Te enviamos el número de seguimiento por correo en cuanto el pedido sale.`],
  ["¿Cómo elijo la talla?",()=>"Mide el contorno del pecho y el largo de la espalda y compáralo con la guía de tallas. Si dudas entre dos, elige la grande. Escríbenos con las medidas y te ayudamos."],
  ["¿Puedo devolverlo?",()=>"Sí. Tienes 14 días naturales desde que lo recibes para desistir de la compra sin dar explicaciones. Te explicamos el proceso en la página de Devoluciones."],
  ["¿Cómo puedo pagar?",()=>"Con PayPal o con tarjeta a través de PayPal, sin necesidad de tener cuenta. No guardamos los datos de tu tarjeta."],
- ["¿El abrigo es impermeable o solo repele el agua?",()=>"[PENDIENTE: confirmar con el proveedor antes de publicar]."],
+ 
  ["¿Tenéis tienda física?",()=>"No, solo vendemos online."]
 ];
 /* ===== LÓGICA ===== */
 const pend=x=>/PENDIENTE|\[pendiente\]|\[NOMBRE|\[NIF|\[DIRECCI/.test(x);
-const clean=x=>CONFIG.abierta?x:x.replace(/\s*\[PENDIENTE[^\]]*\]\.?/g,"");
+const clean=x=>x.replace(/\s*\[PENDIENTE[^\]]*\]\.?/g,"");
 const $=s=>document.querySelector(s), fmt=n=>n.toFixed(2).replace(".",",")+" €";
 let cart=[]; try{cart=JSON.parse(localStorage.getItem("ps_cart")||"[]")}catch(e){}
 const save=()=>{try{localStorage.setItem("ps_cart",JSON.stringify(cart))}catch(e){}};
@@ -309,7 +309,7 @@ function openModal(id){const p=P.find(x=>x.id===id);sel={};Object.entries(p.opts
  $("#mimg").style.background=p.bg;$("#mimg").innerHTML=ART[p.id];
  const draw=()=>{$("#minfo").innerHTML=`<span class="kicker">${p.cat}</span><h2>${p.name}</h2><div class="price">${fmt(price(p))}</div><p style="color:var(--mute);margin:10px 0 16px">${p.short}</p>
  ${Object.entries(p.opts).map(([k,v])=>`<b>${k}</b><div class="opts">${v.map(o=>`<button class="opt ${sel[k]===o?"on":""}" data-k="${k}" data-o="${o}">${o}</button>`).join("")}</div>`).join("")}
- <button class="btn sun" id="addBtn" style="width:100%;justify-content:center">Añadir al carrito</button><ul>${p.pts.filter(x=>CONFIG.abierta||!pend(x)).map(x=>`<li>${x}</li>`).join("")}</ul>
+ <button class="btn sun" id="addBtn" style="width:100%;justify-content:center">Añadir al carrito</button><ul>${p.pts.filter(x=>!pend(x)).map(x=>`<li>${x}</li>`).join("")}</ul>
  <p class="note">${CONFIG.abierta?"Entrega estimada: "+CONFIG.envio+". ":""}Devolución en 14 días.</p>`;
   $("#minfo").querySelectorAll(".opt").forEach(b=>b.onclick=()=>{sel[b.dataset.k]=b.dataset.o;draw()});
   $("#addBtn").onclick=()=>{add(p);closeModal();openCart()}};
@@ -332,7 +332,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();closeC
 /* Pago: PayPal Smart Buttons (sin cuota mensual). Se activa al poner paypalClientId. */
 let ppLoaded=false;
 function renderPay(t){const btn=$("#checkoutBtn"),note=$("#payNote");
- if(!CONFIG.paypalClientId){btn.style.display=cart.length?"flex":"none";btn.onclick=()=>toast("La tienda abre muy pronto 🐾");note.textContent="Pago con PayPal o tarjeta. La tienda abre en breve.";return}
+ if(!CONFIG.paypalClientId||!CONFIG.abierta){btn.style.display=cart.length?"flex":"none";btn.onclick=()=>toast("La tienda abre muy pronto 🐾");note.textContent="Pago con PayPal o tarjeta. La tienda abre en breve.";return}
  btn.style.display="none";note.textContent="Pago seguro con PayPal o tarjeta.";
  if(!cart.length){$("#paypal-buttons").innerHTML="";return}
  const go=()=>{$("#paypal-buttons").innerHTML="";paypal.Buttons({
@@ -346,18 +346,18 @@ function renderPay(t){const btn=$("#checkoutBtn"),note=$("#payNote");
 /* Legal */
 const L={
  aviso:()=>`<h2>Aviso legal</h2><p>En cumplimiento de la Ley 34/2002, de servicios de la sociedad de la información y de comercio electrónico (LSSI), se informa:</p><ul><li>Titular: ${CONFIG.titular}</li><li>NIF: ${CONFIG.nif}</li><li>Domicilio: ${CONFIG.direccion}</li><li>Correo electrónico: ${CONFIG.email}</li></ul><p>El acceso a esta web implica la aceptación de estas condiciones. Los contenidos, el nombre Pataseca y su logotipo son propiedad del titular.</p><p>Última actualización: ${CONFIG.actualizado}.</p>`,
- condiciones:()=>`<h2>Condiciones de venta</h2><h3>Vendedor</h3><p>${CONFIG.titular}, NIF ${CONFIG.nif}, ${CONFIG.direccion}. Contacto: ${CONFIG.email}.</p><h3>Precios</h3><p>Los precios se muestran en euros con IVA incluido. ${CONFIG.envioGratis?"El envío está incluido.":""}</p><h3>Pedido y pago</h3><p>El contrato se perfecciona al confirmarse el pago a través de PayPal. Recibirás un correo de confirmación.</p><h3>Entrega</h3><p>Plazo estimado: ${CONFIG.envio}. Si no podemos cumplir el plazo, te avisaremos y podrás cancelar con reembolso completo.</p><h3>Desistimiento</h3><p>Tienes 14 días naturales desde la recepción para desistir sin justificación. Ver la página de Devoluciones.</p><h3>Garantía</h3><p>Los productos cuentan con la garantía legal de conformidad de 3 años para bienes, conforme al Real Decreto Legislativo 1/2007. [PENDIENTE: revisar con gestoría]</p><h3>Resolución de conflictos</h3><p>Puedes contactar con nosotros en ${CONFIG.email}. También puedes acudir a las juntas arbitrales de consumo.</p>`,
- devoluciones:()=>`<h2>Devoluciones</h2><p>Tienes 14 días naturales desde que recibes el pedido para devolverlo sin dar explicaciones.</p><ol style="padding-left:20px"><li>Escríbenos a ${CONFIG.email} con tu número de pedido.</li><li>Te indicaremos la dirección de devolución.</li><li>Te reembolsamos en un máximo de 14 días desde que nos comunicas el desistimiento, por el mismo medio de pago. Podemos esperar a recibir el producto o la prueba de envío.</li></ol><p>[PENDIENTE: decidir quién paga el envío de la devolución; por ley puede ir a cargo del cliente si se le informa antes.] Si el producto llega defectuoso o equivocado, los gastos corren de nuestra cuenta.</p>`,
- envios:()=>`<h2>Envíos</h2><p>Enviamos a España peninsular y Baleares. [PENDIENTE: Canarias, Ceuta y Melilla según proveedor].</p><p>Plazo estimado: ${CONFIG.envio}. ${CONFIG.envioGratis?"Envío incluido en el precio.":""} Recibirás un número de seguimiento por correo.</p>`,
- privacidad:()=>`<h2>Política de privacidad</h2><p>Responsable: ${CONFIG.titular} (${CONFIG.email}).</p><p>Datos que tratamos: nombre, dirección de envío, correo y, en su caso, teléfono, que nos facilitas al comprar a través de PayPal.</p><p>Finalidad: gestionar y enviar tu pedido y atender tus consultas. Base legal: ejecución del contrato de compraventa.</p><p>Destinatarios: el proveedor logístico que prepara y envía tu pedido, y PayPal como procesador de pagos. Algunos pueden estar fuera de la UE; [PENDIENTE: detallar garantías de transferencia internacional].</p><p>Conservación: el tiempo necesario para el pedido y los plazos legales (contables y fiscales).</p><p>Derechos: acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a ${CONFIG.email}. También puedes reclamar ante la Agencia Española de Protección de Datos (aepd.es).</p>`,
+ condiciones:()=>`<h2>Condiciones de venta</h2><h3>Vendedor</h3><p>${CONFIG.titular}, NIF ${CONFIG.nif}, ${CONFIG.direccion}. Contacto: ${CONFIG.email}.</p><h3>Precios</h3><p>Los precios se muestran en euros con IVA incluido. ${CONFIG.envioGratis?"El envío está incluido.":""}</p><h3>Pedido y pago</h3><p>El contrato se perfecciona al confirmarse el pago a través de PayPal. Recibirás un correo de confirmación.</p><h3>Entrega</h3><p>Plazo estimado: ${CONFIG.envio}. Si no podemos cumplir el plazo, te avisaremos y podrás cancelar con reembolso completo.</p><h3>Desistimiento</h3><p>Tienes 14 días naturales desde la recepción para desistir sin justificación. Ver la página de Devoluciones.</p><h3>Garantía</h3><p>Los productos cuentan con la garantía legal de conformidad de 3 años para bienes, conforme al Real Decreto Legislativo 1/2007.</p><h3>Resolución de conflictos</h3><p>Puedes contactar con nosotros en ${CONFIG.email}. También puedes acudir a las juntas arbitrales de consumo.</p>`,
+ devoluciones:()=>`<h2>Devoluciones</h2><p>Tienes 14 días naturales desde que recibes el pedido para devolverlo sin dar explicaciones.</p><ol style="padding-left:20px"><li>Escríbenos a ${CONFIG.email} con tu número de pedido.</li><li>Te indicaremos la dirección de devolución.</li><li>Te reembolsamos en un máximo de 14 días desde que nos comunicas el desistimiento, por el mismo medio de pago. Podemos esperar a recibir el producto o la prueba de envío.</li></ol><p>Los gastos de envío de la devolución por desistimiento corren a cargo del cliente. Si el producto llega defectuoso o equivocado, los gastos corren de nuestra cuenta.</p>`,
+ envios:()=>`<h2>Envíos</h2><p>Por ahora enviamos a España peninsular y Baleares.</p><p>Plazo estimado: ${CONFIG.envio}. ${CONFIG.envioGratis?"Envío incluido en el precio.":""} Recibirás un número de seguimiento por correo.</p>`,
+ privacidad:()=>`<h2>Política de privacidad</h2><p>Responsable: ${CONFIG.titular} (${CONFIG.email}).</p><p>Datos que tratamos: nombre, dirección de envío, correo y, en su caso, teléfono, que nos facilitas al comprar a través de PayPal.</p><p>Finalidad: gestionar y enviar tu pedido y atender tus consultas. Base legal: ejecución del contrato de compraventa.</p><p>Destinatarios: el proveedor logístico que prepara y envía tu pedido, y PayPal como procesador de pagos. El proveedor y PayPal pueden tratar datos fuera de la UE con las garantías previstas en sus propias políticas de privacidad.</p><p>Conservación: el tiempo necesario para el pedido y los plazos legales (contables y fiscales).</p><p>Derechos: acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a ${CONFIG.email}. También puedes reclamar ante la Agencia Española de Protección de Datos (aepd.es).</p>`,
  cookies:()=>`<h2>Cookies</h2><p>Esta web no utiliza cookies de analítica ni de publicidad. Solo guarda tu carrito en tu propio navegador (almacenamiento local) para que no lo pierdas. Al pagar, PayPal puede usar sus propias cookies técnicas; consulta su política.</p>`,
  contacto:()=>`<h2>Contacto</h2><p>Escríbenos a <b>${CONFIG.email}</b>. Respondemos en 24–48 horas laborables.</p>`
 };
-document.addEventListener("click",e=>{const k=e.target.dataset&&e.target.dataset.legal;if(k){let h=L[k]();if(!CONFIG.abierta){h=h.replace(/\[NOMBRE Y APELLIDOS DEL TITULAR\]|\[NIF\]|\[DIRECCIÓN POSTAL\]/g,"(se publicará antes de la apertura de la tienda)").replace(/Plazo estimado: \[[^\]]*\]\./g,"El plazo se indicará en cada pedido.").replace(/\s*\[PENDIENTE[^\]]*\]\.?/g,"")}$("#legalBody").innerHTML=h;$("#legal").classList.add("on");$("#legal").scrollTop=0}});
+document.addEventListener("click",e=>{const k=e.target.dataset&&e.target.dataset.legal;if(k){let h=L[k]();{h=h.replace(/\[NOMBRE Y APELLIDOS DEL TITULAR\]|\[NIF\]|\[DIRECCIÓN POSTAL\]/g,"(se publicará antes de la apertura de la tienda)").replace(/Plazo estimado: \[[^\]]*\]\./g,"El plazo se indicará en cada pedido.").replace(/\s*\[PENDIENTE[^\]]*\]\.?/g,"")}$("#legalBody").innerHTML=h;$("#legal").classList.add("on");$("#legal").scrollTop=0}});
 $("#lclose").onclick=()=>$("#legal").classList.remove("on");
 /* Tallas + FAQ */
-$("#sizeTable").innerHTML=(CONFIG.abierta?SIZES:SIZES.map((r,i)=>i?[r[0],"Próximamente","Próximamente",r[3]]:r)).map((r,i)=>`<tr>${r.map(c=>i?`<td>${c}</td>`:`<th>${c}</th>`).join("")}</tr>`).join("");
-$("#faqList").innerHTML=FAQ.filter(([q,a])=>CONFIG.abierta||!pend(a())).map(([q,a])=>`<details class="reveal"><summary>${q}</summary><p>${clean(a())}</p></details>`).join("");
+$("#sizeTable").innerHTML=SIZES.map((r,i)=>i&&r[1]==="[pendiente]"?[r[0],"Consúltanos","Consúltanos",r[3]]:r).map((r,i)=>`<tr>${r.map(c=>i?`<td>${c}</td>`:`<th>${c}</th>`).join("")}</tr>`).join("");
+$("#faqList").innerHTML=FAQ.filter(([q,a])=>!pend(a())).map(([q,a])=>`<details class="reveal"><summary>${q}</summary><p>${clean(a())}</p></details>`).join("");
 $("#shipText").textContent=CONFIG.abierta?"Plazo estimado: "+CONFIG.envio+".":"Te indicamos el plazo de entrega al hacer el pedido.";$("#yr").textContent=new Date().getFullYear();
 /* Lluvia */
 (()=>{const cv=$("#rain"),x=cv.getContext("2d");let W,H,drops=[];const rm=matchMedia("(prefers-reduced-motion:reduce)").matches;
