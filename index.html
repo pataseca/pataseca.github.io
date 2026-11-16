@@ -206,7 +206,7 @@ footer small{display:block;margin-top:40px;opacity:.6}
 
 <section id="tallas" style="background:var(--paper)"><div class="wrap">
   <div class="reveal"><span class="kicker">Guía de tallas</span><h2 class="title">Mide antes de pedir</h2><p class="lead">Mide el contorno del pecho (la parte más ancha, detrás de las patas delanteras) y el largo de la espalda (del cuello al inicio de la cola). Si está entre dos tallas, elige la grande.</p></div>
-  <div class="reveal" style="overflow-x:auto"><table class="sizes" id="sizeTable"></table><p class="note">Medidas del abrigo impermeable. Cada producto indica sus tallas en su ficha.</p></div>
+  <div class="reveal" style="overflow-x:auto"><table class="sizes" id="sizeTable"></table><p class="note">Medidas del abrigo impermeable según el fabricante (tolerancia de 1–2 cm). Si tu perro está entre dos tallas, elige la grande.</p></div>
 </div></section>
 
 <section id="faq"><div class="wrap">
@@ -280,7 +280,7 @@ const P=[
   short:"Dispensador para la correa con rollos de bolsas.",
   opts:{Pack:["Dispensador + 4 rollos","8 rollos de recambio"]},pts:["Se engancha a la correa","[PENDIENTE: material de las bolsas; solo diremos «biodegradable» si el proveedor lo certifica]"]}
 ];
-const SIZES=[["Talla","Pecho (cm)","Espalda (cm)","Orientativo"],["S","[pendiente]","[pendiente]","Perro muy pequeño"],["M","[pendiente]","[pendiente]","Perro pequeño"],["L","[pendiente]","[pendiente]","Perro pequeño-mediano"],["XL","[pendiente]","[pendiente]","Perro mediano"],["2XL","[pendiente]","[pendiente]","Perro mediano"],["3XL","[pendiente]","[pendiente]","Perro mediano-grande"]];
+const SIZES=[["Talla","Pecho (cm)","Espalda (cm)","Peso orientativo"],["S","41","21","2,5–3,5 kg"],["M","45","25","3,5–4,5 kg"],["L","49","29","4,5–6,5 kg"],["XL","53","33","6,5–8,5 kg"],["2XL","57","37","8,5–9,5 kg"],["3XL","61","41","10–12,5 kg"]];
 const FAQ=[
  ["¿Cuánto tarda el envío?",()=>`El plazo estimado es ${CONFIG.envio}. ${CONFIG.envioGratis?"El envío está incluido en el precio.":""} Te enviamos el número de seguimiento por correo en cuanto el pedido sale.`],
  ["¿Cómo elijo la talla?",()=>"Mide el contorno del pecho y el largo de la espalda y compáralo con la guía de tallas. Si dudas entre dos, elige la grande. Escríbenos con las medidas y te ayudamos."],
