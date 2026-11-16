@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Pataseca · Paseos bajo la lluvia, perros secos</title>
+<meta name="robots" content="index,follow">
+<meta name="description" content="Pataseca: abrigos impermeables, arneses reflectantes y accesorios de invierno para perros. Paseos bajo la lluvia, perros secos.">
+<meta property="og:title" content="Pataseca · Paseos bajo la lluvia, perros secos">
+<meta property="og:description" content="Abrigos impermeables, arneses y accesorios de invierno para perros.">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#12343B;--ink2:#2C5A63;--sun:#F4C430;--sun2:#FFE08A;--cream:#FBF7EF;--paper:#fff;--coral:#E8735A;--mute:#5E7378;--line:#E3DDD0;--r:22px;--sh:0 18px 40px -18px rgba(18,52,59,.35)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.55;overflow-x:hidden}
+h1,h2,h3,.brand{font-family:Fredoka,Inter,sans-serif;letter-spacing:-.01em}
+a{color:inherit}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.btn{display:inline-flex;align-items:center;gap:.5em;background:var(--ink);color:var(--cream);padding:14px 26px;border-radius:999px;font-weight:600;transition:transform .2s,box-shadow .2s,background .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--sh)}
+.btn.sun{background:var(--sun);color:var(--ink)}
+.btn.ghost{background:transparent;border:2px solid var(--ink)}
+/* header */
+header{position:sticky;top:0;z-index:40;background:rgba(251,247,239,.86);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .3s}
+header.scrolled{border-color:var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+.brand{display:flex;align-items:center;gap:10px;font-size:1.55rem;font-weight:700;text-decoration:none}
+.brand img{width:40px;height:40px}
+.nav ul{display:flex;gap:28px;list-style:none;font-weight:500}
+.nav ul a{text-decoration:none;opacity:.8}.nav ul a:hover{opacity:1}
+.cartbtn{position:relative;width:46px;height:46px;border-radius:50%;background:var(--paper);box-shadow:0 4px 14px -6px rgba(0,0,0,.2);display:grid;place-items:center}
+.cartbtn b{position:absolute;top:-4px;right:-4px;background:var(--coral);color:#fff;font-size:.72rem;min-width:20px;height:20px;border-radius:10px;display:grid;place-items:center;transform:scale(0);transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.cartbtn b.on{transform:scale(1)}
+@media(max-width:760px){.nav ul{display:none}}
+/* hero */
+.hero{position:relative;min-height:88vh;display:flex;align-items:center;background:linear-gradient(180deg,#1B4850 0%,var(--ink) 100%);color:var(--cream);overflow:hidden}
+#rain{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding-top:40px;padding-bottom:60px}
+.hero h1{font-size:clamp(2.4rem,6vw,4.4rem);line-height:1.02}
+.hero h1 em{font-style:normal;color:var(--sun)}
+.hero p{font-size:1.15rem;opacity:.85;margin:20px 0 30px;max-width:30ch}
+.hero .pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.pill{border:1px solid rgba(251,247,239,.25);padding:7px 14px;border-radius:999px;font-size:.88rem}
+.dogwrap{position:relative;aspect-ratio:1;max-width:460px;justify-self:center;width:100%}
+.dogwrap .puddle{position:absolute;bottom:4%;left:15%;right:15%;height:9%;background:rgba(255,255,255,.08);border-radius:50%;animation:ripple 3.5s ease-in-out infinite}
+.dog{position:absolute;inset:0;animation:bob 3.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-10px) rotate(-1deg)}}
+@keyframes ripple{50%{transform:scaleX(1.12);opacity:.6}}
+@media(max-width:860px){.hero .wrap{grid-template-columns:1fr;text-align:center}.hero p{margin-inline:auto}.hero .pills{justify-content:center}.dogwrap{max-width:320px}}
+.wave{display:block;width:100%;height:60px;margin-top:-1px}
+/* sections */
+section{padding:90px 0}
+.kicker{font-weight:600;color:var(--coral);text-transform:uppercase;letter-spacing:.12em;font-size:.8rem}
+.title{font-size:clamp(1.9rem,4vw,2.8rem);margin:8px 0 14px;line-height:1.1}
+.lead{color:var(--mute);max-width:56ch}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s,transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+/* catalog */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin:28px 0}
+.chip{padding:9px 18px;border-radius:999px;background:var(--paper);border:1px solid var(--line);font-weight:500;transition:.2s}
+.chip.on{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:24px}
+.card{background:var(--paper);border-radius:var(--r);overflow:hidden;box-shadow:0 2px 0 var(--line);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:var(--sh)}
+.card .img{aspect-ratio:1/.85;display:grid;place-items:center;position:relative}
+.card .img svg{width:62%;transition:transform .5s}
+.card:hover .img svg{transform:scale(1.07) rotate(3deg)}
+.tag{position:absolute;top:14px;left:14px;background:var(--sun);font-weight:600;font-size:.75rem;padding:5px 11px;border-radius:999px}
+.card .body{padding:18px 20px 22px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card h3{font-size:1.2rem}
+.card p{color:var(--mute);font-size:.92rem;flex:1}
+.row{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+.price{font-family:Fredoka,Inter,system-ui,sans-serif;font-weight:600;font-size:1.35rem}
+.add{width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--cream);font-size:1.4rem;display:grid;place-items:center;transition:transform .2s}
+.add:hover{transform:rotate(90deg) scale(1.08)}
+/* features */
+.feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;margin-top:40px}
+.feat div{background:var(--paper);border-radius:var(--r);padding:26px}
+.feat .ico{width:52px;height:52px;border-radius:16px;background:var(--sun2);display:grid;place-items:center;font-size:1.5rem;margin-bottom:14px}
+.feat h3{font-size:1.15rem;margin-bottom:6px}.feat p{color:var(--mute);font-size:.93rem}
+/* steps */
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:22px;margin-top:40px}
+.steps li{list-style:none;position:relative;padding:24px 22px 22px 22px;border-top:3px solid var(--ink)}
+.steps li::before{counter-increment:s;content:counter(s);font-family:Fredoka,Inter,system-ui,sans-serif;font-weight:700;font-size:2.4rem;color:var(--sun);display:block;line-height:1;margin-bottom:8px;-webkit-text-stroke:1.5px var(--ink)}
+.steps b{display:block;margin-bottom:4px}
+/* size guide */
+.sizes{width:100%;border-collapse:collapse;margin-top:12px;font-size:.92rem}
+.sizes th,.sizes td{padding:10px;border-bottom:1px solid var(--line);text-align:left}
+/* faq */
+.faq{max-width:780px;margin-top:30px}
+.faq details{background:var(--paper);border-radius:16px;margin-bottom:12px;padding:0 22px;transition:background .3s}
+.faq summary{list-style:none;padding:20px 0;font-weight:600;display:flex;justify-content:space-between;gap:20px;cursor:pointer}
+.faq summary::after{content:"+";font-size:1.4rem;transition:transform .3s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 0 20px;color:var(--mute)}
+/* footer */
+footer{background:var(--ink);color:var(--cream);padding:60px 0 30px;margin-top:40px}
+.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:30px}
+footer a{display:block;opacity:.8;text-decoration:none;margin:6px 0;cursor:pointer}footer a:hover{opacity:1}
+footer small{display:block;margin-top:40px;opacity:.6}
+@media(max-width:700px){.fgrid{grid-template-columns:1fr}}
+/* drawer + modal */
+.scrim{position:fixed;inset:0;background:rgba(18,52,59,.45);opacity:0;pointer-events:none;transition:opacity .3s;z-index:50}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(420px,100%);background:var(--cream);z-index:60;transform:translateX(100%);transition:transform .45s cubic-bezier(.2,.7,.2,1);display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.dhead{display:flex;justify-content:space-between;align-items:center;padding:22px;border-bottom:1px solid var(--line)}
+.ditems{flex:1;overflow:auto;padding:12px 22px}
+.ditem{display:grid;grid-template-columns:64px 1fr auto;gap:14px;align-items:center;padding:14px 0;border-bottom:1px dashed var(--line)}
+.ditem .th{width:64px;height:64px;border-radius:14px;display:grid;place-items:center}.ditem .th svg{width:44px}
+.qty{display:inline-flex;align-items:center;gap:8px;margin-top:4px}.qty button{width:26px;height:26px;border-radius:50%;background:var(--paper);border:1px solid var(--line)}
+.dfoot{padding:22px;border-top:1px solid var(--line)}
+.dfoot .tot{display:flex;justify-content:space-between;font-weight:600;font-size:1.1rem;margin-bottom:14px}
+.empty{text-align:center;color:var(--mute);padding:60px 0}
+.modal{position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:16px;pointer-events:none}
+.mbox{background:var(--cream);border-radius:28px;width:min(900px,100%);max-height:92vh;overflow:auto;display:grid;grid-template-columns:1fr 1fr;opacity:0;transform:scale(.94) translateY(20px);transition:.35s cubic-bezier(.2,.7,.2,1)}
+.modal.on{pointer-events:auto}.modal.on .mbox{opacity:1;transform:none}
+.mbox .img{display:grid;place-items:center;min-height:320px}.mbox .img svg{width:70%}
+.mbox .info{padding:34px}
+.mbox h2{font-size:1.8rem;line-height:1.1;margin-bottom:8px}
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 18px}
+.opt{padding:8px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--paper);font-weight:500}
+.opt.on{border-color:var(--ink);background:var(--ink);color:var(--cream)}
+.close{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;background:var(--paper)}
+.mbox ul{margin:14px 0 0 18px;color:var(--mute);font-size:.93rem}
+@media(max-width:760px){.mbox{grid-template-columns:1fr}.mbox .img{min-height:220px}}
+.legal{position:fixed;inset:0;z-index:80;background:var(--cream);overflow:auto;transform:translateY(100%);transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.legal.on{transform:none}
+.legal .wrap{max-width:780px;padding:70px 20px}
+.legal h2{font-size:2rem;margin-bottom:18px}.legal h3{margin:24px 0 8px}.legal p,.legal li{margin-bottom:10px;color:#2a3f44}.legal ul{padding-left:20px}
+.toast{position:fixed;left:50%;top:20px;transform:translate(-50%,-120px);background:var(--ink);color:var(--cream);padding:14px 22px;border-radius:999px;z-index:90;transition:transform .4s cubic-bezier(.3,1.5,.5,1);font-weight:500}
+.toast.on{transform:translate(-50%,0)}
+.note{font-size:.82rem;color:var(--mute);margin-top:10px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header id="hdr"><div class="wrap nav">
+  <a class="brand" href="#top"><img src="logo.svg" alt="">Pataseca</a>
+  <ul><li><a href="#tienda">Tienda</a></li><li><a href="#porque">Por qué</a></li><li><a href="#tallas">Tallas</a></li><li><a href="#faq">Preguntas</a></li></ul>
+  <button class="cartbtn" id="openCart" aria-label="Abrir carrito"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 7h14l-1.5 10h-11z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><b id="count">0</b></button>
+</div></header>
+
+<main id="top">
+<div class="hero">
+  <canvas id="rain"></canvas>
+  <div class="wrap">
+    <div>
+      <h1>Paseos bajo la lluvia, <em>perros secos.</em></h1>
+      <p>Abrigos impermeables, arneses que se ven en la oscuridad y todo lo que tu perro necesita para el invierno.</p>
+      <a class="btn sun" href="#tienda">Ver la tienda →</a>
+      <div class="pills"><span class="pill">☔ Impermeables</span><span class="pill">✨ Reflectantes</span><span class="pill">↩ 14 días para devolver</span></div>
+    </div>
+    <div class="dogwrap"><div class="puddle"></div>
+      <svg class="dog" viewBox="0 0 400 400" aria-hidden="true">
+        <g fill="none" stroke="#FBF7EF" stroke-width="5" stroke-linecap="round"><path d="M110 70l20-30M150 60l10-35M200 55l0-35M250 60l-10-35M290 70l-20-30" opacity=".3"/></g>
+        <ellipse cx="200" cy="350" rx="120" ry="14" fill="#0b2328" opacity=".5"/>
+        <path d="M120 300v45M160 305v42M250 305v42M290 300v45" stroke="#C8956A" stroke-width="22" stroke-linecap="round"/>
+        <path d="M95 255c0-60 45-95 115-95s120 30 120 90c0 40-40 62-120 62S95 300 95 255z" fill="#C8956A"/>
+        <path d="M100 250c0-55 45-88 110-88s115 28 115 85c0 18-8 32-22 42H120c-14-10-20-24-20-39z" fill="#F4C430"/>
+        <path d="M110 268h200" stroke="#12343B" stroke-width="8" opacity=".25"/>
+        <path d="M150 180h120" stroke="#FBF7EF" stroke-width="7" stroke-dasharray="14 10" opacity=".9"/>
+        <path d="M325 245c25-5 40-30 35-55" stroke="#C8956A" stroke-width="16" stroke-linecap="round" fill="none"/>
+        <circle cx="105" cy="175" r="58" fill="#C8956A"/>
+        <path d="M62 140c-18 5-30 35-22 62 10-10 22-22 30-40z" fill="#8E5E3B"/>
+        <path d="M140 128c18 0 28 30 22 58-12-8-22-22-28-38z" fill="#8E5E3B"/>
+        <ellipse cx="78" cy="198" rx="26" ry="20" fill="#E8C3A0"/>
+        <ellipse cx="62" cy="190" rx="10" ry="8" fill="#12343B"/>
+        <circle cx="96" cy="165" r="7" fill="#12343B"/><circle cx="98" cy="163" r="2.4" fill="#fff"/>
+        <path d="M70 214q12 10 26 2" stroke="#12343B" stroke-width="4" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+</div>
+<svg class="wave" viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0 0h1440v20c-240 40-480 40-720 10S240 0 0 30z" fill="#12343B"/></svg>
+
+<section id="tienda"><div class="wrap">
+  <div class="reveal"><span class="kicker">Tienda</span><h2 class="title">Equipo de invierno para tu perro</h2><p class="lead">Una selección corta de productos útiles. Pocos y bien elegidos.</p></div>
+  <div class="filters reveal" id="filters"></div>
+  <div class="grid" id="grid"></div>
+</div></section>
+
+<section id="porque" style="background:var(--paper)"><div class="wrap">
+  <div class="reveal"><span class="kicker">Por qué Pataseca</span><h2 class="title">Pensado para el paseo de verdad</h2></div>
+  <div class="feat">
+    <div class="reveal"><div class="ico">☔</div><h3>Lluvia fuera</h3><p>Tejidos impermeables para que el paseo de las 8 no termine en toalla y secador.</p></div>
+    <div class="reveal"><div class="ico">✨</div><h3>Se ve de noche</h3><p>Detalles reflectantes para los paseos de invierno, cuando oscurece antes.</p></div>
+    <div class="reveal"><div class="ico">🐾</div><h3>Fácil de poner</h3><p>Cierres rápidos y arnés integrado en el abrigo: un solo gesto y a la calle.</p></div>
+    <div class="reveal"><div class="ico">↩</div><h3>Sin riesgo</h3><p>Tienes 14 días desde que lo recibes para devolverlo, como marca la ley.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="reveal"><span class="kicker">Cómo funciona</span><h2 class="title">Del clic al paseo</h2></div>
+  <ol class="steps">
+    <li class="reveal"><b>Elige y paga</b>Pago seguro con PayPal o tarjeta.</li>
+    <li class="reveal"><b>Confirmación</b>Te llega un correo con tu pedido.</li>
+    <li class="reveal"><b>Enviamos</b><span id="shipText">Plazo de entrega estimado indicado en cada producto.</span></li>
+    <li class="reveal"><b>A pasear</b>¿No le queda bien? Tienes 14 días para devolverlo.</li>
+  </ol>
+</div></section>
+
+<section id="tallas" style="background:var(--paper)"><div class="wrap">
+  <div class="reveal"><span class="kicker">Guía de tallas</span><h2 class="title">Mide antes de pedir</h2><p class="lead">Mide el contorno del pecho (la parte más ancha, detrás de las patas delanteras) y el largo de la espalda (del cuello al inicio de la cola). Si está entre dos tallas, elige la grande.</p></div>
+  <div class="reveal" style="overflow-x:auto"><table class="sizes" id="sizeTable"></table><p class="note">Medidas del abrigo impermeable. Cada producto indica sus tallas en su ficha.</p></div>
+</div></section>
+
+<section id="faq"><div class="wrap">
+  <div class="reveal"><span class="kicker">Preguntas frecuentes</span><h2 class="title">Lo que nos suelen preguntar</h2></div>
+  <div class="faq" id="faqList"></div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <div class="fgrid">
+    <div><div class="brand" style="color:var(--cream)"><img src="logo.svg" alt="">Pataseca</div><p style="opacity:.75;margin-top:12px;max-width:34ch">Paseos bajo la lluvia, perros secos.</p></div>
+    <div><b>Ayuda</b><a data-legal="envios">Envíos</a><a data-legal="devoluciones">Devoluciones</a><a href="#faq">Preguntas frecuentes</a><a data-legal="contacto">Contacto</a></div>
+    <div><b>Legal</b><a data-legal="aviso">Aviso legal</a><a data-legal="condiciones">Condiciones de venta</a><a data-legal="privacidad">Privacidad</a><a data-legal="cookies">Cookies</a></div>
+  </div>
+  <small>© <span id="yr"></span> Pataseca. Precios con IVA incluido.</small>
+</div></footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Carrito">
+  <div class="dhead"><h3 style="font-family:Fredoka,Inter,system-ui,sans-serif;font-size:1.4rem">Tu carrito</h3><button id="closeCart" aria-label="Cerrar">✕</button></div>
+  <div class="ditems" id="ditems"></div>
+  <div class="dfoot"><div class="tot"><span>Total</span><span id="total">0,00 €</span></div>
+    <div id="paypal-buttons"></div>
+    <button class="btn" style="width:100%;justify-content:center" id="checkoutBtn">Finalizar compra</button>
+    <p class="note" id="payNote"></p>
+  </div>
+</aside>
+<div class="modal" id="modal"><div class="mbox" style="position:relative"><button class="close" id="mclose" aria-label="Cerrar">✕</button><div class="img" id="mimg"></div><div class="info" id="minfo"></div></div></div>
+<div class="legal" id="legal"><button class="close" style="position:fixed" id="lclose" aria-label="Cerrar">✕</button><div class="wrap" id="legalBody"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== CONFIGURACIÓN (rellenar antes de publicar) ===== */
+const CONFIG={
+  email:"patasecas.tienda@gmail.com",
+  titular:"[NOMBRE Y APELLIDOS DEL TITULAR]", nif:"[NIF]", direccion:"[DIRECCIÓN POSTAL]",
+  paypalClientId:"", // al rellenarlo se activa el pago con PayPal
+  envio:"[PENDIENTE: plazo del proveedor, p. ej. 7–15 días laborables]",
+  envioGratis:true,
+  abierta:false, // true cuando haya proveedor, PayPal y datos del titular
+  actualizado:"16/11/2026"
+};
+/* ===== CATÁLOGO (precios provisionales hasta confirmar coste con proveedor) ===== */
+const C={y:"#F4C430",i:"#12343B",c:"#C8956A",k:"#E8735A",w:"#FBF7EF",g:"#7FB3A8"};
+const ART={
+ abrigo:`<svg viewBox="0 0 200 200"><path d="M40 90c0-30 25-48 62-48s60 16 60 46c0 10-4 18-12 24H52c-8-6-12-13-12-22z" fill="${C.y}"/><path d="M60 70h80" stroke="${C.w}" stroke-width="5" stroke-dasharray="10 7"/><path d="M48 100h112" stroke="${C.i}" stroke-width="5" opacity=".25"/><circle cx="102" cy="60" r="7" fill="${C.i}"/><path d="M102 60v-18" stroke="${C.i}" stroke-width="4"/><path d="M60 112v30M140 112v30" stroke="${C.y}" stroke-width="14" stroke-linecap="round"/><path d="M50 150c30 8 70 8 100 0" stroke="${C.i}" stroke-width="3" opacity=".2" fill="none"/></svg>`,
+ saco:`<svg viewBox="0 0 200 200"><ellipse cx="100" cy="130" rx="78" ry="34" fill="${C.g}"/><path d="M30 125c0-45 32-75 70-75s70 30 70 75" fill="${C.w}" stroke="${C.g}" stroke-width="10"/><ellipse cx="100" cy="128" rx="52" ry="20" fill="${C.i}" opacity=".15"/><circle cx="85" cy="112" r="16" fill="${C.c}"/><ellipse cx="74" cy="104" rx="6" ry="10" fill="#8E5E3B"/><path d="M80 112q5 4 10 0" stroke="${C.i}" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
+ arnes:`<svg viewBox="0 0 200 200"><path d="M50 70c20-20 80-20 100 0l-10 70c-25 14-55 14-80 0z" fill="${C.k}"/><path d="M58 92h84M62 118h76" stroke="${C.w}" stroke-width="6" opacity=".9"/><circle cx="100" cy="66" r="9" fill="none" stroke="${C.i}" stroke-width="5"/><path d="M100 57V30" stroke="${C.i}" stroke-width="5"/><rect x="88" y="128" width="24" height="12" rx="3" fill="${C.i}"/></svg>`,
+ lamedora:`<svg viewBox="0 0 200 200"><rect x="35" y="45" width="130" height="110" rx="26" fill="${C.g}"/><g fill="${C.w}" opacity=".9"><circle cx="70" cy="80" r="8"/><circle cx="100" cy="80" r="8"/><circle cx="130" cy="80" r="8"/><circle cx="70" cy="110" r="8"/><circle cx="100" cy="110" r="8"/><circle cx="130" cy="110" r="8"/></g><path d="M60 135q40 14 80 0" stroke="${C.w}" stroke-width="6" fill="none" stroke-linecap="round"/></svg>`,
+ guante:`<svg viewBox="0 0 200 200"><path d="M62 160V80c0-10 14-10 14 0V60c0-10 14-10 14 0v-6c0-10 14-10 14 0v6c0-10 14-10 14 0v40l10-12c8-8 18 0 12 10l-20 34v28z" fill="${C.i}"/><g fill="${C.y}"><circle cx="80" cy="110" r="4"/><circle cx="96" cy="104" r="4"/><circle cx="112" cy="110" r="4"/><circle cx="88" cy="126" r="4"/><circle cx="104" cy="126" r="4"/></g><path d="M62 150h68" stroke="${C.w}" stroke-width="6"/></svg>`,
+ bolsas:`<svg viewBox="0 0 200 200"><rect x="60" y="60" width="80" height="100" rx="34" fill="${C.g}"/><circle cx="100" cy="60" r="14" fill="none" stroke="${C.i}" stroke-width="6"/><path d="M100 160v20" stroke="${C.w}" stroke-width="16"/><path d="M80 100c10-14 30-14 40 0" stroke="${C.w}" stroke-width="6" fill="none"/><path d="M84 120h32" stroke="${C.w}" stroke-width="6"/></svg>`
+};
+const P=[
+ {id:"abrigo",cat:"Abrigos",tag:"Más vendido",bg:"#FFF3CC",name:"Abrigo impermeable con arnés",price:34.90,
+  short:"Chubasquero con arnés integrado y detalles reflectantes.",
+  opts:{Talla:["XS","S","M","L","XL","XXL"],Color:["Amarillo","Azul marino"]},
+  pts:["Tejido impermeable","Arnés integrado: engancha la correa por la abertura de la espalda","Detalles reflectantes","[PENDIENTE: material y especificaciones exactas del proveedor]"]},
+ {id:"saco",cat:"Descanso",tag:"Invierno",bg:"#E3F0EC",name:"Saco-cama calentito",price:29.90,
+  short:"Cama tipo saco para perros pequeños que buscan esconderse del frío.",
+  opts:{Tamaño:["S","M","L"]},pts:["Para perros pequeños","Interior suave","[PENDIENTE: medidas y lavado según proveedor]"]},
+ {id:"arnes",cat:"Paseo",bg:"#FBE3DC",name:"Arnés antitirón reflectante",price:27.90,
+  short:"Enganche delantero que ayuda a reducir los tirones en el paseo.",
+  opts:{Talla:["S","M","L","XL"],Color:["Coral","Negro"]},pts:["Enganche delantero y trasero","Cintas reflectantes","[PENDIENTE: medidas del proveedor]"]},
+ {id:"lamedora",cat:"Casa",bg:"#E3F0EC",name:"Alfombra lamedora",price:14.90,
+  short:"Para untar comida húmeda o premios: entretiene y hace que coma más despacio.",
+  opts:{Color:["Verde","Gris"]},pts:["Silicona","Ventosas para fijarla","[PENDIENTE: confirmar silicona apta para alimentos y lavavajillas]"]},
+ {id:"guante",cat:"Casa",bg:"#E6ECEE",name:"Guante quitapelos",price:12.90,
+  short:"Cepilla mientras acaricias y atrapa el pelo muerto.",
+  opts:{Mano:["Derecha","Izquierda","Pareja (+5 €)"]},pts:["Talla única ajustable","Lavable con agua","[PENDIENTE: material del proveedor]"]},
+ {id:"bolsas",cat:"Paseo",bg:"#E3F0EC",name:"Dispensador + bolsas",price:9.90,
+  short:"Dispensador para la correa con rollos de bolsas.",
+  opts:{Pack:["Dispensador + 4 rollos","8 rollos de recambio"]},pts:["Se engancha a la correa","[PENDIENTE: material de las bolsas; solo diremos «biodegradable» si el proveedor lo certifica]"]}
+];
+const SIZES=[["Talla","Pecho (cm)","Espalda (cm)","Orientativo"],["XS","[pendiente]","[pendiente]","Chihuahua"],["S","[pendiente]","[pendiente]","Yorkshire"],["M","[pendiente]","[pendiente]","Beagle"],["L","[pendiente]","[pendiente]","Border collie"],["XL","[pendiente]","[pendiente]","Labrador"],["XXL","[pendiente]","[pendiente]","Pastor alemán"]];
+const FAQ=[
+ ["¿Cuánto tarda el envío?",()=>`El plazo estimado es ${CONFIG.envio}. ${CONFIG.envioGratis?"El envío está incluido en el precio.":""} Te enviamos el número de seguimiento por correo en cuanto el pedido sale.`],
+ ["¿Cómo elijo la talla?",()=>"Mide el contorno del pecho y el largo de la espalda y compáralo con la guía de tallas. Si dudas entre dos, elige la grande. Escríbenos con las medidas y te ayudamos."],
+ ["¿Puedo devolverlo?",()=>"Sí. Tienes 14 días naturales desde que lo recibes para desistir de la compra sin dar explicaciones. Te explicamos el proceso en la página de Devoluciones."],
+ ["¿Cómo puedo pagar?",()=>"Con PayPal o con tarjeta a través de PayPal, sin necesidad de tener cuenta. No guardamos los datos de tu tarjeta."],
+ ["¿El abrigo es impermeable o solo repele el agua?",()=>"[PENDIENTE: confirmar con el proveedor antes de publicar]."],
+ ["¿Tenéis tienda física?",()=>"No, solo vendemos online."]
+];
+/* ===== LÓGICA ===== */
+const pend=x=>/PENDIENTE|\[pendiente\]|\[NOMBRE|\[NIF|\[DIRECCI/.test(x);
+const clean=x=>CONFIG.abierta?x:x.replace(/\s*\[PENDIENTE[^\]]*\]\.?/g,"");
+const $=s=>document.querySelector(s), fmt=n=>n.toFixed(2).replace(".",",")+" €";
+let cart=[]; try{cart=JSON.parse(localStorage.getItem("ps_cart")||"[]")}catch(e){}
+const save=()=>{try{localStorage.setItem("ps_cart",JSON.stringify(cart))}catch(e){}};
+function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("on");clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove("on"),2200)}
+let filter="Todo";
+function renderFilters(){const cats=["Todo",...new Set(P.map(p=>p.cat))];$("#filters").innerHTML=cats.map(c=>`<button class="chip ${c===filter?"on":""}" data-c="${c}">${c}</button>`).join("")}
+function renderGrid(){$("#grid").innerHTML=P.filter(p=>filter==="Todo"||p.cat===filter).map(p=>`
+ <article class="card reveal in"><div class="img" style="background:${p.bg}">${p.tag?`<span class="tag">${p.tag}</span>`:""}${ART[p.id]}</div>
+ <div class="body"><h3>${p.name}</h3><p>${p.short}</p><div class="row"><span class="price">${fmt(p.price)}</span>
+ <button class="add" data-open="${p.id}" aria-label="Ver ${p.name}">+</button></div></div></article>`).join("")}
+$("#filters").onclick=e=>{const c=e.target.dataset.c;if(!c)return;filter=c;renderFilters();renderGrid()};
+$("#grid").onclick=e=>{const b=e.target.closest("[data-open]");if(b)openModal(b.dataset.open);else{const c=e.target.closest(".card");if(c)openModal(c.querySelector("[data-open]").dataset.open)}};
+let sel={};
+function openModal(id){const p=P.find(x=>x.id===id);sel={};Object.entries(p.opts).forEach(([k,v])=>sel[k]=v[0]);
+ $("#mimg").style.background=p.bg;$("#mimg").innerHTML=ART[p.id];
+ const draw=()=>{$("#minfo").innerHTML=`<span class="kicker">${p.cat}</span><h2>${p.name}</h2><div class="price">${fmt(price(p))}</div><p style="color:var(--mute);margin:10px 0 16px">${p.short}</p>
+ ${Object.entries(p.opts).map(([k,v])=>`<b>${k}</b><div class="opts">${v.map(o=>`<button class="opt ${sel[k]===o?"on":""}" data-k="${k}" data-o="${o}">${o}</button>`).join("")}</div>`).join("")}
+ <button class="btn sun" id="addBtn" style="width:100%;justify-content:center">Añadir al carrito</button><ul>${p.pts.filter(x=>CONFIG.abierta||!pend(x)).map(x=>`<li>${x}</li>`).join("")}</ul>
+ <p class="note">${CONFIG.abierta?"Entrega estimada: "+CONFIG.envio+". ":""}Devolución en 14 días.</p>`;
+  $("#minfo").querySelectorAll(".opt").forEach(b=>b.onclick=()=>{sel[b.dataset.k]=b.dataset.o;draw()});
+  $("#addBtn").onclick=()=>{add(p);closeModal();openCart()}};
+ draw();$("#modal").classList.add("on");$("#scrim").classList.add("on")}
+const price=p=>p.price+(Object.values(sel).some(v=>/\+5/.test(v))?5:0);
+function closeModal(){$("#modal").classList.remove("on");if(!$("#drawer").classList.contains("on"))$("#scrim").classList.remove("on")}
+function add(p){const v=Object.values(sel).join(" · "),k=p.id+"|"+v,f=cart.find(x=>x.k===k);
+ if(f)f.q++;else cart.push({k,id:p.id,name:p.name,v,price:price(p),q:1});save();renderCart();toast("Añadido al carrito 🐾")}
+function renderCart(){const n=cart.reduce((a,b)=>a+b.q,0),t=cart.reduce((a,b)=>a+b.q*b.price,0);
+ $("#count").textContent=n;$("#count").classList.toggle("on",n>0);$("#total").textContent=fmt(t);
+ $("#ditems").innerHTML=cart.length?cart.map((x,i)=>{const p=P.find(y=>y.id===x.id);return `<div class="ditem"><div class="th" style="background:${p.bg}">${ART[p.id]}</div>
+ <div><b>${x.name}</b><div class="note" style="margin:0">${x.v}</div><div class="qty"><button data-d="${i}">−</button>${x.q}<button data-i="${i}">+</button></div></div><b>${fmt(x.q*x.price)}</b></div>`}).join(""):`<div class="empty">Tu carrito está vacío.<br>¡Tu perro espera! 🐶</div>`;
+ renderPay(t)}
+$("#ditems").onclick=e=>{const i=e.target.dataset.i,d=e.target.dataset.d;if(i!=null)cart[i].q++;if(d!=null){cart[d].q--;if(!cart[d].q)cart.splice(d,1)}save();renderCart()};
+function openCart(){$("#drawer").classList.add("on");$("#scrim").classList.add("on")}
+function closeCart(){$("#drawer").classList.remove("on");$("#scrim").classList.remove("on")}
+$("#openCart").onclick=openCart;$("#closeCart").onclick=closeCart;$("#mclose").onclick=closeModal;
+$("#scrim").onclick=()=>{closeModal();closeCart()};
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();closeCart();$("#legal").classList.remove("on")}});
+/* Pago: PayPal Smart Buttons (sin cuota mensual). Se activa al poner paypalClientId. */
+let ppLoaded=false;
+function renderPay(t){const btn=$("#checkoutBtn"),note=$("#payNote");
+ if(!CONFIG.paypalClientId){btn.style.display=cart.length?"flex":"none";btn.onclick=()=>toast("La tienda abre muy pronto 🐾");note.textContent="Pago con PayPal o tarjeta. La tienda abre en breve.";return}
+ btn.style.display="none";note.textContent="Pago seguro con PayPal o tarjeta.";
+ if(!cart.length){$("#paypal-buttons").innerHTML="";return}
+ const go=()=>{$("#paypal-buttons").innerHTML="";paypal.Buttons({
+   createOrder:(d,a)=>a.order.create({purchase_units:[{description:"Pedido Pataseca",amount:{currency_code:"EUR",value:cart.reduce((s,x)=>s+x.q*x.price,0).toFixed(2),
+     breakdown:{item_total:{currency_code:"EUR",value:cart.reduce((s,x)=>s+x.q*x.price,0).toFixed(2)}}},
+     items:cart.map(x=>({name:(x.name+" ("+x.v+")").slice(0,127),quantity:String(x.q),unit_amount:{currency_code:"EUR",value:x.price.toFixed(2)}}))}],
+     application_context:{shipping_preference:"GET_FROM_FILE",brand_name:"Pataseca",locale:"es-ES"}}),
+   onApprove:(d,a)=>a.order.capture().then(()=>{cart=[];save();renderCart();closeCart();toast("¡Pedido recibido! Te llegará un correo de confirmación.")})
+ }).render("#paypal-buttons")};
+ if(ppLoaded)go();else{const s=document.createElement("script");s.src=`https://www.paypal.com/sdk/js?client-id=${CONFIG.paypalClientId}&currency=EUR&locale=es_ES`;s.onload=()=>{ppLoaded=true;go()};document.head.appendChild(s)}}
+/* Legal */
+const L={
+ aviso:()=>`<h2>Aviso legal</h2><p>En cumplimiento de la Ley 34/2002, de servicios de la sociedad de la información y de comercio electrónico (LSSI), se informa:</p><ul><li>Titular: ${CONFIG.titular}</li><li>NIF: ${CONFIG.nif}</li><li>Domicilio: ${CONFIG.direccion}</li><li>Correo electrónico: ${CONFIG.email}</li></ul><p>El acceso a esta web implica la aceptación de estas condiciones. Los contenidos, el nombre Pataseca y su logotipo son propiedad del titular.</p><p>Última actualización: ${CONFIG.actualizado}.</p>`,
+ condiciones:()=>`<h2>Condiciones de venta</h2><h3>Vendedor</h3><p>${CONFIG.titular}, NIF ${CONFIG.nif}, ${CONFIG.direccion}. Contacto: ${CONFIG.email}.</p><h3>Precios</h3><p>Los precios se muestran en euros con IVA incluido. ${CONFIG.envioGratis?"El envío está incluido.":""}</p><h3>Pedido y pago</h3><p>El contrato se perfecciona al confirmarse el pago a través de PayPal. Recibirás un correo de confirmación.</p><h3>Entrega</h3><p>Plazo estimado: ${CONFIG.envio}. Si no podemos cumplir el plazo, te avisaremos y podrás cancelar con reembolso completo.</p><h3>Desistimiento</h3><p>Tienes 14 días naturales desde la recepción para desistir sin justificación. Ver la página de Devoluciones.</p><h3>Garantía</h3><p>Los productos cuentan con la garantía legal de conformidad de 3 años para bienes, conforme al Real Decreto Legislativo 1/2007. [PENDIENTE: revisar con gestoría]</p><h3>Resolución de conflictos</h3><p>Puedes contactar con nosotros en ${CONFIG.email}. También puedes acudir a las juntas arbitrales de consumo.</p>`,
+ devoluciones:()=>`<h2>Devoluciones</h2><p>Tienes 14 días naturales desde que recibes el pedido para devolverlo sin dar explicaciones.</p><ol style="padding-left:20px"><li>Escríbenos a ${CONFIG.email} con tu número de pedido.</li><li>Te indicaremos la dirección de devolución.</li><li>Te reembolsamos en un máximo de 14 días desde que nos comunicas el desistimiento, por el mismo medio de pago. Podemos esperar a recibir el producto o la prueba de envío.</li></ol><p>[PENDIENTE: decidir quién paga el envío de la devolución; por ley puede ir a cargo del cliente si se le informa antes.] Si el producto llega defectuoso o equivocado, los gastos corren de nuestra cuenta.</p>`,
+ envios:()=>`<h2>Envíos</h2><p>Enviamos a España peninsular y Baleares. [PENDIENTE: Canarias, Ceuta y Melilla según proveedor].</p><p>Plazo estimado: ${CONFIG.envio}. ${CONFIG.envioGratis?"Envío incluido en el precio.":""} Recibirás un número de seguimiento por correo.</p>`,
+ privacidad:()=>`<h2>Política de privacidad</h2><p>Responsable: ${CONFIG.titular} (${CONFIG.email}).</p><p>Datos que tratamos: nombre, dirección de envío, correo y, en su caso, teléfono, que nos facilitas al comprar a través de PayPal.</p><p>Finalidad: gestionar y enviar tu pedido y atender tus consultas. Base legal: ejecución del contrato de compraventa.</p><p>Destinatarios: el proveedor logístico que prepara y envía tu pedido, y PayPal como procesador de pagos. Algunos pueden estar fuera de la UE; [PENDIENTE: detallar garantías de transferencia internacional].</p><p>Conservación: el tiempo necesario para el pedido y los plazos legales (contables y fiscales).</p><p>Derechos: acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a ${CONFIG.email}. También puedes reclamar ante la Agencia Española de Protección de Datos (aepd.es).</p>`,
+ cookies:()=>`<h2>Cookies</h2><p>Esta web no utiliza cookies de analítica ni de publicidad. Solo guarda tu carrito en tu propio navegador (almacenamiento local) para que no lo pierdas. Al pagar, PayPal puede usar sus propias cookies técnicas; consulta su política.</p>`,
+ contacto:()=>`<h2>Contacto</h2><p>Escríbenos a <b>${CONFIG.email}</b>. Respondemos en 24–48 horas laborables.</p>`
+};
+document.addEventListener("click",e=>{const k=e.target.dataset&&e.target.dataset.legal;if(k){let h=L[k]();if(!CONFIG.abierta){h=h.replace(/\[NOMBRE Y APELLIDOS DEL TITULAR\]|\[NIF\]|\[DIRECCIÓN POSTAL\]/g,"(se publicará antes de la apertura de la tienda)").replace(/Plazo estimado: \[[^\]]*\]\./g,"El plazo se indicará en cada pedido.").replace(/\s*\[PENDIENTE[^\]]*\]\.?/g,"")}$("#legalBody").innerHTML=h;$("#legal").classList.add("on");$("#legal").scrollTop=0}});
+$("#lclose").onclick=()=>$("#legal").classList.remove("on");
+/* Tallas + FAQ */
+$("#sizeTable").innerHTML=(CONFIG.abierta?SIZES:SIZES.map((r,i)=>i?[r[0],"Próximamente","Próximamente",r[3]]:r)).map((r,i)=>`<tr>${r.map(c=>i?`<td>${c}</td>`:`<th>${c}</th>`).join("")}</tr>`).join("");
+$("#faqList").innerHTML=FAQ.filter(([q,a])=>CONFIG.abierta||!pend(a())).map(([q,a])=>`<details class="reveal"><summary>${q}</summary><p>${clean(a())}</p></details>`).join("");
+$("#shipText").textContent=CONFIG.abierta?"Plazo estimado: "+CONFIG.envio+".":"Te indicamos el plazo de entrega al hacer el pedido.";$("#yr").textContent=new Date().getFullYear();
+/* Lluvia */
+(()=>{const cv=$("#rain"),x=cv.getContext("2d");let W,H,drops=[];const rm=matchMedia("(prefers-reduced-motion:reduce)").matches;
+ const rs=()=>{W=cv.width=cv.offsetWidth*devicePixelRatio;H=cv.height=cv.offsetHeight*devicePixelRatio;drops=Array.from({length:Math.min(140,W/12)},()=>({x:Math.random()*W,y:Math.random()*H,l:8+Math.random()*18,v:5+Math.random()*8}))};
+ rs();addEventListener("resize",rs);
+ (function f(){x.clearRect(0,0,W,H);x.strokeStyle="rgba(251,247,239,.28)";x.lineWidth=1.4*devicePixelRatio;x.beginPath();
+  drops.forEach(d=>{x.moveTo(d.x,d.y);x.lineTo(d.x-d.l*.25,d.y+d.l);d.y+=d.v*devicePixelRatio;d.x-=d.v*.25;if(d.y>H){d.y=-20;d.x=Math.random()*W*1.2}});x.stroke();if(!rm)requestAnimationFrame(f)})()})();
+/* Reveal + header */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+addEventListener("scroll",()=>$("#hdr").classList.toggle("scrolled",scrollY>10),{passive:true});
+renderFilters();renderGrid();renderCart();
+</script>
+</body>
+</html>
