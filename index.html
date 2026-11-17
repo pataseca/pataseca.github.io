@@ -139,6 +139,7 @@ footer small{display:block;margin-top:40px;opacity:.6}
 </style>
 </head>
 <body>
+<div id="promo" style="display:none;background:#F3C430;color:#12343B;text-align:center;font-weight:800;padding:10px 14px;font-size:15px"></div>
 <header id="hdr"><div class="wrap nav">
   <a class="brand" href="#top"><img src="logo.svg" alt="">Pataseca</a>
   <ul><li><a href="#tienda">Tienda</a></li><li><a href="#porque">Por qué</a></li><li><a href="#tallas">Tallas</a></li><li><a href="#faq">Preguntas</a></li></ul>
@@ -247,8 +248,11 @@ const CONFIG={
   envio:"entre 2 y 4 semanas",
   envioGratis:true,
   abierta:true, // true cuando haya proveedor, PayPal y datos del titular
-  actualizado:"16/11/2026"
+  actualizado:"17/11/2026",
+  promo:{desde:"2026-11-23",hasta:"2026-11-30",texto:"🎁 Black Friday: con cada abrigo, el guante quitapelos de regalo"}
 };
+const promoOn=()=>{const d=new Date(),f=x=>new Date(x+"T00:00:00");return CONFIG.promo&&d>=f(CONFIG.promo.desde)&&d<new Date(f(CONFIG.promo.hasta).getTime()+864e5)};
+const nRegalo=()=>promoOn()?cart.filter(x=>x.id==="abrigo").reduce((a,b)=>a+b.q,0):0;
 /* ===== CATÁLOGO (precios provisionales hasta confirmar coste con proveedor) ===== */
 const C={y:"#F4C430",i:"#12343B",c:"#C8956A",k:"#E8735A",w:"#FBF7EF",g:"#7FB3A8"};
 const ART={
@@ -322,6 +326,7 @@ function renderCart(){const n=cart.reduce((a,b)=>a+b.q,0),t=cart.reduce((a,b)=>a
  $("#count").textContent=n;$("#count").classList.toggle("on",n>0);$("#total").textContent=fmt(t);
  $("#ditems").innerHTML=cart.length?cart.map((x,i)=>{const p=P.find(y=>y.id===x.id);return `<div class="ditem"><div class="th" style="background:${p.bg}">${ART[p.id]}</div>
  <div><b>${x.name}</b><div class="note" style="margin:0">${x.v}</div><div class="qty"><button data-d="${i}">−</button>${x.q}<button data-i="${i}">+</button></div></div><b>${fmt(x.q*x.price)}</b></div>`}).join(""):`<div class="empty">Tu carrito está vacío.<br>¡Tu perro espera! 🐶</div>`;
+ if(nRegalo())$("#ditems").innerHTML+=`<div class="ditem"><div class="th" style="background:#E6ECEE">${ART["guante"]}</div><div><b>🎁 Guante quitapelos de regalo</b><div class="note" style="margin:0">Black Friday · ${nRegalo()} ud.</div></div><b>0,00 €</b></div>`;
  renderPay(t)}
 $("#ditems").onclick=e=>{const i=e.target.dataset.i,d=e.target.dataset.d;if(i!=null)cart[i].q++;if(d!=null){cart[d].q--;if(!cart[d].q)cart.splice(d,1)}save();renderCart()};
 function openCart(){$("#drawer").classList.add("on");$("#scrim").classList.add("on")}
@@ -336,7 +341,7 @@ function renderPay(t){const btn=$("#checkoutBtn"),note=$("#payNote");
  btn.style.display="none";note.textContent="Pago seguro con PayPal o tarjeta.";
  if(!cart.length){$("#paypal-buttons").innerHTML="";return}
  const go=()=>{$("#paypal-buttons").innerHTML="";paypal.Buttons({
-   createOrder:(d,a)=>a.order.create({purchase_units:[{description:"Pedido Pataseca",amount:{currency_code:"EUR",value:cart.reduce((s,x)=>s+x.q*x.price,0).toFixed(2),
+   createOrder:(d,a)=>a.order.create({purchase_units:[{description:nRegalo()?("Pedido Pataseca + regalo Black Friday: "+nRegalo()+" guante(s) quitapelos"):"Pedido Pataseca",amount:{currency_code:"EUR",value:cart.reduce((s,x)=>s+x.q*x.price,0).toFixed(2),
      breakdown:{item_total:{currency_code:"EUR",value:cart.reduce((s,x)=>s+x.q*x.price,0).toFixed(2)}}},
      items:cart.map(x=>({name:(x.name+" ("+x.v+")").slice(0,127),quantity:String(x.q),unit_amount:{currency_code:"EUR",value:x.price.toFixed(2)}}))}],
      application_context:{shipping_preference:"GET_FROM_FILE",brand_name:"Pataseca",locale:"es-ES"}}),
@@ -346,7 +351,7 @@ function renderPay(t){const btn=$("#checkoutBtn"),note=$("#payNote");
 /* Legal */
 const L={
  aviso:()=>`<h2>Aviso legal</h2><p>En cumplimiento de la Ley 34/2002, de servicios de la sociedad de la información y de comercio electrónico (LSSI), se informa:</p><ul><li>Titular: ${CONFIG.titular}</li><li>NIF: ${CONFIG.nif}</li><li>Domicilio: ${CONFIG.direccion}</li><li>Correo electrónico: ${CONFIG.email}</li></ul><p>El acceso a esta web implica la aceptación de estas condiciones. Los contenidos, el nombre Pataseca y su logotipo son propiedad del titular.</p><p>Última actualización: ${CONFIG.actualizado}.</p>`,
- condiciones:()=>`<h2>Condiciones de venta</h2><h3>Vendedor</h3><p>${CONFIG.titular}, NIF ${CONFIG.nif}, ${CONFIG.direccion}. Contacto: ${CONFIG.email}.</p><h3>Precios</h3><p>Los precios se muestran en euros con IVA incluido. ${CONFIG.envioGratis?"El envío está incluido.":""}</p><h3>Pedido y pago</h3><p>El contrato se perfecciona al confirmarse el pago a través de PayPal. Recibirás un correo de confirmación.</p><h3>Entrega</h3><p>Plazo estimado: ${CONFIG.envio}. Si no podemos cumplir el plazo, te avisaremos y podrás cancelar con reembolso completo.</p><h3>Desistimiento</h3><p>Tienes 14 días naturales desde la recepción para desistir sin justificación. Ver la página de Devoluciones.</p><h3>Garantía</h3><p>Los productos cuentan con la garantía legal de conformidad de 3 años para bienes, conforme al Real Decreto Legislativo 1/2007.</p><h3>Resolución de conflictos</h3><p>Puedes contactar con nosotros en ${CONFIG.email}. También puedes acudir a las juntas arbitrales de consumo.</p>`,
+ condiciones:()=>`<h2>Condiciones de venta</h2><h3>Vendedor</h3><p>${CONFIG.titular}, NIF ${CONFIG.nif}, ${CONFIG.direccion}. Contacto: ${CONFIG.email}.</p><h3>Precios</h3><p>Los precios se muestran en euros con IVA incluido. ${CONFIG.envioGratis?"El envío está incluido.":""}</p><h3>Pedido y pago</h3><p>El contrato se perfecciona al confirmarse el pago a través de PayPal. Recibirás un correo de confirmación.</p><h3>Entrega</h3><p>Plazo estimado: ${CONFIG.envio}. Si no podemos cumplir el plazo, te avisaremos y podrás cancelar con reembolso completo.</p>${CONFIG.promo?`<h3>Promoción Black Friday</h3><p>Del 23 al 30 de noviembre de 2026, por cada abrigo impermeable comprado se regala un guante quitapelos. Si devuelves el abrigo, el regalo puede quedarse contigo. Promoción no acumulable y sin valor en efectivo.</p>`:""}<h3>Desistimiento</h3><p>Tienes 14 días naturales desde la recepción para desistir sin justificación. Ver la página de Devoluciones.</p><h3>Garantía</h3><p>Los productos cuentan con la garantía legal de conformidad de 3 años para bienes, conforme al Real Decreto Legislativo 1/2007.</p><h3>Resolución de conflictos</h3><p>Puedes contactar con nosotros en ${CONFIG.email}. También puedes acudir a las juntas arbitrales de consumo.</p>`,
  devoluciones:()=>`<h2>Devoluciones</h2><p>Tienes 14 días naturales desde que recibes el pedido para devolverlo sin dar explicaciones.</p><ol style="padding-left:20px"><li>Escríbenos a ${CONFIG.email} con tu número de pedido.</li><li>Te indicaremos la dirección de devolución.</li><li>Te reembolsamos en un máximo de 14 días desde que nos comunicas el desistimiento, por el mismo medio de pago. Podemos esperar a recibir el producto o la prueba de envío.</li></ol><p>Los gastos de envío de la devolución por desistimiento corren a cargo del cliente. Si el producto llega defectuoso o equivocado, los gastos corren de nuestra cuenta.</p>`,
  envios:()=>`<h2>Envíos</h2><p>Por ahora enviamos a España peninsular y Baleares.</p><p>Plazo estimado: ${CONFIG.envio}. ${CONFIG.envioGratis?"Envío incluido en el precio.":""} Recibirás un número de seguimiento por correo.</p>`,
  privacidad:()=>`<h2>Política de privacidad</h2><p>Responsable: ${CONFIG.titular} (${CONFIG.email}).</p><p>Datos que tratamos: nombre, dirección de envío, correo y, en su caso, teléfono, que nos facilitas al comprar a través de PayPal.</p><p>Finalidad: gestionar y enviar tu pedido y atender tus consultas. Base legal: ejecución del contrato de compraventa.</p><p>Destinatarios: el proveedor logístico que prepara y envía tu pedido, y PayPal como procesador de pagos. El proveedor y PayPal pueden tratar datos fuera de la UE con las garantías previstas en sus propias políticas de privacidad.</p><p>Conservación: el tiempo necesario para el pedido y los plazos legales (contables y fiscales).</p><p>Derechos: acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a ${CONFIG.email}. También puedes reclamar ante la Agencia Española de Protección de Datos (aepd.es).</p>`,
@@ -370,6 +375,12 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.targ
 document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
 addEventListener("scroll",()=>$("#hdr").classList.toggle("scrolled",scrollY>10),{passive:true});
 renderFilters();renderGrid();renderCart();
+if(promoOn()){const b=document.getElementById("promo");b.textContent=CONFIG.promo.texto;b.style.display="block"}
+/* enlaces directos a producto: https://pataseca.github.io/#p-abrigo */
+const deep=()=>{const m=location.hash.match(/^#p-(\w+)$/);if(m&&P.find(x=>x.id===m[1]))openModal(m[1])};
+window.addEventListener("hashchange",deep);deep();
+/* datos estructurados para Google */
+(()=>{const s=document.createElement("script");s.type="application/ld+json";s.textContent=JSON.stringify(P.map(p=>({"@context":"https://schema.org","@type":"Product",name:p.name,description:clean(p.short),sku:p.id,brand:{"@type":"Brand",name:"Pataseca"},offers:{"@type":"Offer",url:"https://pataseca.github.io/#p-"+p.id,priceCurrency:"EUR",price:p.price.toFixed(2),availability:"https://schema.org/InStock",itemCondition:"https://schema.org/NewCondition"}})));document.head.appendChild(s)})();
 </script>
 </body>
 </html>
